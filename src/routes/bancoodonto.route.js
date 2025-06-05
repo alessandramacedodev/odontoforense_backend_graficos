@@ -1,8 +1,13 @@
-const express = require('express')
-const BancoOdontoController = require('../controllers/bancoodonto.controller')
-const { authenticate, authorize } = require('../middlewares/auth')
-const upload = require('../middlewares/upload') // multer para upload
-const router = express.Router()
+const express = require('express');
+const BancoOdontoController = require('../controllers/bancoodonto.controller');
+const { authenticate, authorize } = require('../middlewares/auth');
+const upload = require('../middlewares/upload'); // multer para upload
+
+const router = express.Router();
+
+/* -------------------------------------------------------------------------- */
+/*                                 SWAGGER DOCS                               */
+/* -------------------------------------------------------------------------- */
 
 /**
  * @swagger
@@ -52,6 +57,10 @@ const router = express.Router()
  *               type: string
  */
 
+/* -------------------------------------------------------------------------- */
+/*                                    ROTAS                                   */
+/* -------------------------------------------------------------------------- */
+
 /**
  * @swagger
  * /api/banco-odonto:
@@ -86,7 +95,13 @@ const router = express.Router()
  *       500:
  *         description: Erro ao criar laudo
  */
-router.post( '/', authenticate,authorize(['admin', 'perito']), upload.single('file'), BancoOdontoController.createBancoOdonto)
+router.post(
+  '/',
+  authenticate,
+  authorize(['admin', 'perito']),
+  upload.single('file'),
+  BancoOdontoController.createBancoOdonto
+);
 
 /**
  * @swagger
@@ -100,7 +115,12 @@ router.post( '/', authenticate,authorize(['admin', 'perito']), upload.single('fi
  *       500:
  *         description: Erro ao listar laudos
  */
-router.get('/', authenticate,authorize(['admin', 'perito', 'assistente']),BancoOdontoController.getBancoOdonto)
+router.get(
+  '/',
+  authenticate,
+  authorize(['admin', 'perito', 'assistente']),
+  BancoOdontoController.getBancoOdonto
+);
 
 /**
  * @swagger
@@ -120,7 +140,12 @@ router.get('/', authenticate,authorize(['admin', 'perito', 'assistente']),BancoO
  *       404:
  *         description: Laudo não encontrado
  */
-router.get('/:id', authenticate, authorize(['admin', 'perito', 'assistente']), BancoOdontoController.getBancoOdontoById)
+router.get(
+  '/:id',
+  authenticate,
+  authorize(['admin', 'perito', 'assistente']),
+  BancoOdontoController.getBancoOdontoById
+);
 
 /**
  * @swagger
@@ -146,7 +171,12 @@ router.get('/:id', authenticate, authorize(['admin', 'perito', 'assistente']), B
  *       400:
  *         description: ID inválido ou laudo não encontrado
  */
-router.put('/:id', authenticate, authorize(['admin', 'perito']), BancoOdontoController.updateBancoOdonto)
+router.put(
+  '/:id',
+  authenticate,
+  authorize(['admin', 'perito']),
+  BancoOdontoController.updateBancoOdonto
+);
 
 /**
  * @swagger
@@ -166,7 +196,12 @@ router.put('/:id', authenticate, authorize(['admin', 'perito']), BancoOdontoCont
  *       404:
  *         description: Laudo não encontrado
  */
-router.delete('/:id', authenticate, authorize(['admin', 'perito']), BancoOdontoController.deleteBancoOdontoById)
+router.delete(
+  '/:id',
+  authenticate,
+  authorize(['admin', 'perito']),
+  BancoOdontoController.deleteBancoOdontoById
+);
 
 /**
  * @swagger
@@ -178,6 +213,11 @@ router.delete('/:id', authenticate, authorize(['admin', 'perito']), BancoOdontoC
  *       200:
  *         description: Todos os laudos foram removidos
  */
-router.delete('/', authenticate, authorize(['admin']), BancoOdontoController.deleteBancoOdonto)
+router.delete(
+  '/',
+  authenticate,
+  authorize(['admin']),
+  BancoOdontoController.deleteBancoOdonto
+);
 
-module.exports = router
+module.exports = router;
